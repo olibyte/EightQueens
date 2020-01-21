@@ -18,6 +18,24 @@ namespace Chess
 
             if (Board.Length != countDistinct + (countZeroes > 1 ? countZeroes -1 : 0)) //if there are duplicate values
                 return false;
+
+            //no two queens may be on the same diagonal
+            //to do this we calculate the slope
+            for(int i = 1; i <= 8; i++)
+                for(int j = i + 1; j <= 8; j++)
+                {
+                    if (Board[i - 1] != 0 && Board[j - 1] != 0) //ignore the empty positions...
+                    {
+                        var dX = Math.Abs(i - j); //diff between columns
+                        var dY = Math.Abs(Board[i - 1] - Board[j - 1]); //diff between rows
+
+                        if (dX == dY) //if equadistant, pieces are in line diagonally 
+                        {
+                            return false;
+                        }
+                    }
+                }
+            return true;
         }
 
         public static bool PlaceQueens(ChessBoard board = null, int column = 0)
