@@ -40,7 +40,29 @@ namespace Chess
 
         public static bool PlaceQueens(ChessBoard board = null, int column = 0)
         {
-            throw new NotImplementedException();
+            board = board ?? new ChessBoard();
+
+            for (int row = 1; row <= 8; row++)
+            {
+                board.Board[column] = row;
+
+                if(board.IsSafe())
+                {
+                    if(column == 7)
+                    {
+                        return true; //success
+                    }
+                    else
+                    {
+                        var newBoard = new ChessBoard(board);
+                        if (PlaceQueens(newBoard, column + 1))
+                            return true;
+                        else
+                            continue;
+                    }
+                }
+            }
+            return false;
         }
 
         public static bool PlaceQueens(List<ChessBoard> solutions, ChessBoard board = null, int column = 0)
