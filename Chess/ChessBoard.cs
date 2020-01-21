@@ -10,7 +10,14 @@ namespace Chess
 
         public bool IsSafe()
         {
-            throw new NotImplementedException();
+            //no two queens may be on the same row, i.e. all values must be distinct
+            //{ 1,2,3,4,5,6,7,8 }
+            var countZeroes = Board.Count(n => n == 0);
+
+            var countDistinct = Board.Distinct().Count();
+
+            if (Board.Length != countDistinct + (countZeroes > 1 ? countZeroes -1 : 0)) //if there are duplicate values
+                return false;
         }
 
         public static bool PlaceQueens(ChessBoard board = null, int column = 0)
