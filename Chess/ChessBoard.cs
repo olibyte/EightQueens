@@ -67,7 +67,31 @@ namespace Chess
 
         public static bool PlaceQueens(List<ChessBoard> solutions, ChessBoard board = null, int column = 0)
         {
-            throw new NotImplementedException();
+            board = board ?? new ChessBoard();
+            solutions = solutions ?? new List<ChessBoard>(92);
+
+            for (int row = 1; row <= 8; row++)
+            {
+                board.Board[column] = row;
+
+                if (board.IsSafe())
+                {
+                    if (column == 7)
+                    {
+                        solutions.Add(new ChessBoard(board)); //found a solution, add to the collection
+                        return true; //success
+                    }
+                    else
+                    {
+                        var newBoard = new ChessBoard(board);
+                        if (PlaceQueens(solutions, newBoard, column + 1))
+                            continue;
+                        else
+                            continue;
+                    }
+                }
+            }
+            return false;
         }
 
         #region Constructors
